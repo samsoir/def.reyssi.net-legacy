@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en-GB">
+	<head>
+		<?php echo $head; ?>
+	</head>
+	<body>
+		<div id="header">
+			<h1><?php echo $title; ?></h1>
+			<p>for the love of code <span class="amp">&amp;</span> other endeavours</p>
+		</div>
+		<div id="archive" class="clear">
+			<?php if (isset($articles)) : ?>
+				<?php foreach ($articles as $article) : ?>
+				<?php list($day, $month, $year) = explode('/', date('d/M/Y', $article->created));?>
+				<div class="article">
+					<div class="date">
+						<span class="day"><?php echo $day; ?></span> <span class="month"><?php echo $month; ?></span> <span class="year"><?php echo $year; ?></span>
+					</div>
+					<?php list($day, $month, $year) = explode('/', date('Y/m/d/', $article->created));?>
+					<h2><?php echo Html::anchor(Route::get('post')->uri(array('year' => $year, 'month' => $month, 'day' => $day, 'article' => $article->slug)), $article->title.' &raquo;'); ?></h2>
+					<p><?php echo $article->description; ?> <?php echo Html::anchor(Route::get('post')->uri(array('year' => $year, 'month' => $month, 'day' => $day, 'article' => $article->slug)), 'read more &raquo;' );?></p>
+				</div>
+				<?php endforeach; ?>
+			<?php endif; ?>
+			<?php echo $pagination; ?>
+		</div>
+		<?php echo $pages; ?>
+		<div id="user-state">
+		<?php if (isset($user)) : ?>
+			<p>Bienvenue <?php echo ($user->name); ?>! <?php echo Html::anchor(Route::get('login')->uri(array('action' => 'logout')), 'Logout'); ?></p>
+		<?php else : ?>
+			<p>Bonjour! <?php echo Html::anchor(Route::get('login')->uri(array('action' => 'login')), 'Login'); ?></p>
+		<?php endif; ?>
+		</div>
+		<?php echo $footer; ?>
+	</body>
+</html>

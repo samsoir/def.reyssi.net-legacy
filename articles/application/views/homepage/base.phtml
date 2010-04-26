@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html lang="en-GB">
+	<head>
+		<?php echo $head; ?>
+	</head>
+	<body>
+		<div id="header">
+			<h1><?php echo $title; ?></h1>
+			<p>for the love of code <span class="amp">&amp;</span> other endeavours</p>
+		</div>
+		<div id="homepage" class="clear">
+			<?php if (isset($leader)) : ?>
+			<div id="leader">
+				<h2><?php list($year, $month, $day) = explode('/', date('Y/m/d/', $leader->created)); echo Html::anchor($leader_uri = Route::get('post')->uri(array('year' => $year, 'month' => $month, 'day' => $day, 'article' => $leader->slug)), $leader->title ); ?></h2>
+				<p class="clear meta"></span><span class="pubdate float-left"><?php echo date('d F Y', $leader->created);?></span></p>
+				<p><?php echo $leader->description; ?> <?php echo Html::anchor($leader_uri, 'read more &raquo;' );?></p>
+			</div>
+			<?php endif; ?>
+			<?php if (isset($columns)) : ?>
+			<div id="columns">
+				<?php foreach ($columns as $column) : ?>
+				<div class="column">
+					<h2><?php list($year, $month, $day) = explode('/', date('Y/m/d/', $column->created)); echo Html::anchor($leader_uri = Route::get('post')->uri(array('year' => $year, 'month' => $month, 'day' => $day, 'article' => $column->slug)), $column->title.' &raquo;' ); ?></h2>
+				</div>
+				<?php endforeach; ?>
+				<?php if ($count > 5) : ?>
+				<div class="column archive">
+					<h2><?php echo Html::anchor(Route::get('archive')->uri(), 'Full archive &raquo;', array('title' => 'View the full archive of blog posts')); ?></h2>
+				</div>
+				<?php endif; ?>
+			</div>
+			<?php else : ?>
+				<div id="leader">
+					<h2>The press is closed</h2>
+					<p>There are currently no article available for viewing. Please try again soon.</p>
+				</div>
+			<?php endif; ?>
+		</div>
+		<?php echo $pages; ?>
+		<div id="user-state">
+		<?php if (isset($user)) : ?>
+			<p>Bienvenue <?php echo ($user->name); ?>! <?php echo Html::anchor(Route::get('login')->uri(array('action' => 'logout')), 'Logout'); ?></p>
+		<?php else : ?>
+			<p>Bonjour! <?php echo Html::anchor(Route::get('login')->uri(array('action' => 'login')), 'Login'); ?></p>
+		<?php endif; ?>
+		</div>
+		<?php echo $footer; ?>
+	</body>
+</html>

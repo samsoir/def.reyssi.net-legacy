@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en-GB">
+	<head>
+		<?php echo $head; ?>
+	</head>
+	<body>
+		<div id="header">
+			<h1><?php echo $title; ?></h1>
+			<p>for the love of code <span class="amp">&amp;</span> other endeavours</p>
+		</div>
+		<?php if (isset($login)) : ?>
+		<div id="auth" class="clear">
+			<div id="login-form">
+				<?php echo Form::open('/login'); ?>
+				<h2>Log yourself in&hellip;</h2>
+				<?php if (NULL !== $error) : ?>
+				<p class="error"><?php echo $error; ?></p>
+				<?php endif; ?>
+				<?php foreach ($login as $label => $item) : ?>
+				<div class="login-row">
+					<?php echo $label; ?>
+					<?php echo $item; ?>
+				</div>
+				<?php endforeach; ?>
+				<?php echo Form::submit('login', 'Login'); ?>
+				<?php echo Form::close(); ?>
+			</div>
+			<div class="options">
+<!--->				<ol>
+					<li><?php // echo Html::anchor('/', 'Return home'); ?></li>
+					<li><?php // echo Html::anchor('/register', 'Register'); ?></li>
+				</ol>-->
+			</div>
+		</div>
+		<?php endif; ?>
+		<?php echo $pages; ?>
+		<?php echo $footer; ?>
+	</body>
+</html>

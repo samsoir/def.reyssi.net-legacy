@@ -1,0 +1,12 @@
+<?php if ($pages or ! isset($is_home)) : ?>
+<div id="pages">
+	<ul>
+		<?php if ( ! isset($is_home)) : ?>
+		<li><?php  echo Html::anchor(Route::get('home')->uri(), '&laquo; Home', array('title' => 'Return to the homepage')); ?></li>
+		<?php endif; ?>
+		<?php foreach ($pages as $page) : ?>
+		<li><?php echo Html::anchor(Route::get('page')->uri(array('page' => $page->slug)), $page->title);?></li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>
